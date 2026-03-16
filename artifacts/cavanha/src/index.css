@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Nunito:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-serif: var(--app-font-serif);
+  --font-mono: var(--app-font-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --background: 210 20% 98%;
+  --foreground: 220 30% 10%;
+  --border: 220 15% 88%;
+  --input: 220 15% 88%;
+  --ring: 218 82% 20%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 30% 10%;
+  --primary: 218 82% 20%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 25 92% 54%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 220 15% 95%;
+  --muted-foreground: 220 15% 45%;
+  --accent: 25 92% 54%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --app-font-sans: 'Nunito', sans-serif;
+  --app-font-serif: 'Barlow Condensed', sans-serif;
+  --app-font-mono: monospace;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Nunito', sans-serif;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+}
+
+/* Brand colors */
+.brand-navy { color: #0D2B5C; }
+.bg-navy { background-color: #0D2B5C; }
+.brand-orange { color: #F5841F; }
+.bg-orange { background-color: #F5841F; }
+.border-navy { border-color: #0D2B5C; }
+.border-orange { border-color: #F5841F; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #0D2B5C; border-radius: 3px; }
+
+/* Smooth transitions */
+* { transition: color 0.2s, background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+
+/* Card hover */
+.product-card:hover { transform: translateY(-4px); }
+
+/* Badge pulse */
+@keyframes pulse-badge {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+.badge-pulse { animation: pulse-badge 2s infinite; }
+
+/* Hero gradient */
+.hero-gradient {
+  background: linear-gradient(135deg, #0D2B5C 0%, #1a4080 60%, #0D2B5C 100%);
+}
+
+/* Orange gradient button */
+.btn-orange {
+  background: linear-gradient(135deg, #F5841F 0%, #e06b0a 100%);
+  box-shadow: 0 4px 15px rgba(245, 132, 31, 0.4);
+}
+.btn-orange:hover {
+  background: linear-gradient(135deg, #ff9535 0%, #F5841F 100%);
+  box-shadow: 0 6px 20px rgba(245, 132, 31, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Navy gradient button */
+.btn-navy {
+  background: linear-gradient(135deg, #0D2B5C 0%, #1a4080 100%);
+  box-shadow: 0 4px 15px rgba(13, 43, 92, 0.3);
+}
+.btn-navy:hover {
+  background: linear-gradient(135deg, #1a4080 0%, #0D2B5C 100%);
+  transform: translateY(-1px);
+}
+
+/* Sticky header */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* WhatsApp float button */
+@keyframes float-wpp {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+.float-wpp { animation: float-wpp 3s ease-in-out infinite; }
+
+/* Section divider */
+.section-divider {
+  height: 4px;
+  background: linear-gradient(90deg, #0D2B5C, #F5841F, #0D2B5C);
+  border-radius: 2px;
+}
+
+/* Shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Star */
+.star-filled { color: #F5841F; }
+.star-empty { color: #d1d5db; }

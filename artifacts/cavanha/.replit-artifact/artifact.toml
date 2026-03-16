@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Cavanha Materiais de Construção"
+version = "1.0.0"
+id = "artifacts/cavanha"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+localPort = 24666
+name = "web"
+paths = ["/"]
+
+[services.development]
+run = "pnpm --filter @workspace/cavanha run dev"
+
+[services.env]
+PORT = "24666"
+BASE_PATH = "/"
+
+[services.production]
+build = ["pnpm", "--filter", "@workspace/cavanha", "run", "build"]
+publicDir = "artifacts/cavanha/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
