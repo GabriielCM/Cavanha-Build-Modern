@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
@@ -228,22 +228,28 @@ const PRODUCT_COLORS: Record<string, { bg: string; accent: string; icon: string 
   "grout": { bg: "#e8e8e8", accent: "#666", icon: "🔲" },
 };
 
-function ProductImage({ type, className }: { type: string; className?: string }) {
+const FIXED_IMG_HEIGHT = 180;
+
+function ProductImage({ type }: { type: string }) {
   const style = PRODUCT_COLORS[type] || { bg: "#f0f0f0", accent: "#888", icon: "📦" };
-  
-  // Render actual patterns for tiles
+  const baseStyle: React.CSSProperties = { width: "100%", height: FIXED_IMG_HEIGHT, overflow: "hidden", flexShrink: 0 };
+
   if (type === "tile-marble") {
     return (
-      <div className={className} style={{ background: style.bg, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-        <svg width="100%" height="100%" viewBox="0 0 120 120">
-          <rect width="120" height="120" fill="#f9f9f9"/>
-          <rect x="0" y="0" width="60" height="60" fill="#f2f2f2" stroke="#e0e0e0" strokeWidth="1"/>
-          <rect x="60" y="0" width="60" height="60" fill="#ebebeb" stroke="#e0e0e0" strokeWidth="1"/>
-          <rect x="0" y="60" width="60" height="60" fill="#ededee" stroke="#e0e0e0" strokeWidth="1"/>
-          <rect x="60" y="60" width="60" height="60" fill="#f4f4f4" stroke="#e0e0e0" strokeWidth="1"/>
-          <path d="M10 20 Q30 15 50 30 Q70 45 100 20" stroke="#d0d0d0" strokeWidth="0.8" fill="none"/>
-          <path d="M5 50 Q35 40 65 55 Q80 62 115 45" stroke="#c8c8c8" strokeWidth="0.6" fill="none"/>
-          <path d="M20 80 Q50 72 80 85 Q95 92 110 78" stroke="#d4d4d4" strokeWidth="0.7" fill="none"/>
+      <div style={{ ...baseStyle, background: style.bg, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <svg width="100%" height="100%" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice">
+          <rect width="240" height="180" fill="#fafafa"/>
+          <rect x="0" y="0" width="120" height="90" fill="#f2f2f2" stroke="#e4e4e4" strokeWidth="1.5"/>
+          <rect x="120" y="0" width="120" height="90" fill="#ebebeb" stroke="#e4e4e4" strokeWidth="1.5"/>
+          <rect x="0" y="90" width="120" height="90" fill="#ededee" stroke="#e4e4e4" strokeWidth="1.5"/>
+          <rect x="120" y="90" width="120" height="90" fill="#f5f5f5" stroke="#e4e4e4" strokeWidth="1.5"/>
+          <path d="M10 28 Q60 18 110 35 Q155 50 220 22" stroke="#d2d2d2" strokeWidth="1.2" fill="none"/>
+          <path d="M5 55 Q55 44 105 58 Q150 70 230 50" stroke="#cacaca" strokeWidth="0.9" fill="none"/>
+          <path d="M15 78 Q65 68 115 82 Q160 94 225 74" stroke="#d4d4d4" strokeWidth="1" fill="none"/>
+          <path d="M8 118 Q68 108 118 122 Q160 132 228 114" stroke="#d0d0d0" strokeWidth="1.1" fill="none"/>
+          <path d="M12 148 Q62 138 112 152 Q155 162 222 144" stroke="#cccccc" strokeWidth="0.9" fill="none"/>
+          <path d="M130 12 Q140 50 128 80 Q118 108 132 145" stroke="#d2d2d2" strokeWidth="1" fill="none"/>
+          <path d="M165 5 Q172 48 162 88 Q153 122 168 165" stroke="#cacaca" strokeWidth="0.8" fill="none"/>
         </svg>
       </div>
     );
@@ -251,15 +257,21 @@ function ProductImage({ type, className }: { type: string; className?: string })
 
   if (type === "floor-wood") {
     return (
-      <div className={className} style={{ background: style.bg, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-        <svg width="100%" height="100%" viewBox="0 0 120 120">
-          <rect width="120" height="120" fill="#f5e6c8"/>
-          {[0,1,2,3,4,5,6,7].map(i => (
-            <g key={i}>
-              <rect x={i % 2 === 0 ? 0 : 20} y={i * 15} width={i % 2 === 0 ? 75 : 95} height="14" rx="1" fill={i % 3 === 0 ? "#c9955c" : i % 3 === 1 ? "#b8864e" : "#d4a76a"} stroke="#8B5E3C" strokeWidth="0.5"/>
-              {i % 2 === 0 && <rect x="80" y={i * 15} width="40" height="14" rx="1" fill="#bf8545" stroke="#8B5E3C" strokeWidth="0.5"/>}
-            </g>
-          ))}
+      <div style={{ ...baseStyle, background: "#f5e6c8" }}>
+        <svg width="100%" height="100%" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice">
+          <rect width="240" height="180" fill="#f5e6c8"/>
+          {[0,1,2,3,4,5,6,7,8,9,10].map(i => {
+            const y = i * 18;
+            const offset = i % 2 === 0 ? 0 : 30;
+            const fills = ["#c9955c","#b8864e","#d4a76a","#bf8545","#ca9a5e"];
+            return (
+              <g key={i}>
+                <rect x={offset} y={y} width="90" height="16" rx="1.5" fill={fills[i%5]} stroke="#8B5E3C" strokeWidth="0.5"/>
+                <rect x={offset+95} y={y} width="110" height="16" rx="1.5" fill={fills[(i+2)%5]} stroke="#8B5E3C" strokeWidth="0.5"/>
+                {offset === 0 && <rect x="205" y={y} width="35" height="16" rx="1.5" fill={fills[(i+1)%5]} stroke="#8B5E3C" strokeWidth="0.5"/>}
+              </g>
+            );
+          })}
         </svg>
       </div>
     );
@@ -267,17 +279,106 @@ function ProductImage({ type, className }: { type: string; className?: string })
 
   if (type === "tile-travertine") {
     return (
-      <div className={className} style={{ background: style.bg, overflow: "hidden" }}>
-        <svg width="100%" height="100%" viewBox="0 0 120 120">
-          <rect width="120" height="120" fill="#f0e4d0"/>
-          <rect x="2" y="2" width="116" height="116" rx="2" fill="#ecdcc4" stroke="#c4a882" strokeWidth="1"/>
-          <path d="M15 25 Q40 20 70 28 Q90 34 110 22" stroke="#c4a882" strokeWidth="1" fill="none" opacity="0.6"/>
-          <path d="M8 50 Q30 45 60 52 Q80 57 112 46" stroke="#b89a70" strokeWidth="0.8" fill="none" opacity="0.5"/>
-          <path d="M20 75 Q50 68 75 77 Q95 84 115 72" stroke="#c4a882" strokeWidth="0.9" fill="none" opacity="0.6"/>
-          <path d="M5 95 Q35 88 65 96 Q85 102 115 90" stroke="#b89a70" strokeWidth="0.7" fill="none" opacity="0.4"/>
-          <circle cx="35" cy="38" r="2" fill="#c4a882" opacity="0.4"/>
-          <circle cx="78" cy="62" r="1.5" fill="#b89a70" opacity="0.4"/>
-          <circle cx="55" cy="88" r="2.5" fill="#c4a882" opacity="0.3"/>
+      <div style={{ ...baseStyle, background: style.bg }}>
+        <svg width="100%" height="100%" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice">
+          <rect width="240" height="180" fill="#f0e4d0"/>
+          <rect x="2" y="2" width="236" height="176" rx="3" fill="#ecdcc4" stroke="#c4a882" strokeWidth="1"/>
+          <path d="M15 22 Q60 16 110 26 Q160 36 225 20" stroke="#c4a882" strokeWidth="1.2" fill="none" opacity="0.7"/>
+          <path d="M8 45 Q55 38 105 48 Q155 58 230 42" stroke="#b89a70" strokeWidth="1" fill="none" opacity="0.6"/>
+          <path d="M12 70 Q58 62 108 72 Q158 82 228 66" stroke="#c4a882" strokeWidth="1.1" fill="none" opacity="0.65"/>
+          <path d="M5 98 Q52 90 102 100 Q152 110 227 94" stroke="#b89a70" strokeWidth="0.9" fill="none" opacity="0.5"/>
+          <path d="M18 125 Q64 116 114 128 Q162 138 228 120" stroke="#c4a882" strokeWidth="1" fill="none" opacity="0.6"/>
+          <path d="M10 152 Q58 142 108 154 Q156 164 226 148" stroke="#b89a70" strokeWidth="0.8" fill="none" opacity="0.45"/>
+          <circle cx="55" cy="38" r="3" fill="#c4a882" opacity="0.45"/>
+          <circle cx="148" cy="72" r="2.5" fill="#b89a70" opacity="0.4"/>
+          <circle cx="88" cy="118" r="3.5" fill="#c4a882" opacity="0.35"/>
+          <circle cx="195" cy="95" r="2" fill="#b89a70" opacity="0.4"/>
+          <circle cx="32" cy="155" r="2.5" fill="#c4a882" opacity="0.35"/>
+        </svg>
+      </div>
+    );
+  }
+
+  if (type === "cement") {
+    return (
+      <div style={{ ...baseStyle, background: "linear-gradient(160deg, #e8e8e8 0%, #d4d4d4 100%)", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 8 }}>
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <rect x="10" y="35" width="80" height="55" rx="4" fill="#c8c8c8" stroke="#aaa" strokeWidth="1.5"/>
+          <rect x="10" y="35" width="80" height="18" rx="4" fill="#bebebe" stroke="#aaa" strokeWidth="1.5"/>
+          <path d="M25 35 L25 10 L75 10 L75 35" fill="none" stroke="#aaa" strokeWidth="1.5"/>
+          <rect x="28" y="12" width="44" height="22" rx="2" fill="#d4d4d4" stroke="#aaa" strokeWidth="1"/>
+          <text x="50" y="30" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="700" fontSize="9" fill="#888">CP-II 50KG</text>
+          <text x="50" y="62" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="11" fill="#0D2B5C">ITAMBÉ</text>
+          <text x="50" y="76" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="7" fill="#666">CIMENTO PORTLAND</text>
+        </svg>
+      </div>
+    );
+  }
+
+  if (type === "mortar") {
+    return (
+      <div style={{ ...baseStyle, background: "linear-gradient(160deg, #f0ece4 0%, #e0d8cc 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <rect x="15" y="20" width="70" height="70" rx="4" fill="#d8cfc0" stroke="#b8a882" strokeWidth="1.5"/>
+          <rect x="15" y="20" width="70" height="22" rx="4" fill="#c8bfb0" stroke="#b8a882" strokeWidth="1.5"/>
+          <text x="50" y="36" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="10" fill="#0D2B5C">QUARTZOLIT</text>
+          <text x="50" y="58" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="700" fontSize="9" fill="#555">ARGAMASSA</text>
+          <text x="50" y="70" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="7.5" fill="#666">AC-III | 20KG</text>
+          <rect x="30" y="78" width="40" height="6" rx="2" fill="#F5841F" opacity="0.7"/>
+          <text x="50" y="83" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="5.5" fill="white" fontWeight="700">PORCELANATO</text>
+        </svg>
+      </div>
+    );
+  }
+
+  if (type === "paint-white") {
+    return (
+      <div style={{ ...baseStyle, background: "linear-gradient(160deg, #e8f0fe 0%, #d8e8ff 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <svg width="110" height="100" viewBox="0 0 110 100">
+          <ellipse cx="55" cy="88" rx="34" ry="8" fill="rgba(0,0,0,0.08)"/>
+          <rect x="28" y="18" width="54" height="68" rx="6" fill="#e0e8f8" stroke="#b0c0e8" strokeWidth="1.5"/>
+          <rect x="28" y="18" width="54" height="28" rx="6" fill="#d0daf5" stroke="#b0c0e8" strokeWidth="1.5"/>
+          <rect x="36" y="8" width="38" height="12" rx="3" fill="#c8d4f0" stroke="#b0c0e8" strokeWidth="1"/>
+          <rect x="46" y="5" width="18" height="5" rx="2.5" fill="#b8c8e8" stroke="#a0b0d8" strokeWidth="1"/>
+          <text x="55" y="34" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="11" fill="#0D2B5C">SUVINIL</text>
+          <rect x="34" y="40" width="42" height="16" rx="2" fill="white" opacity="0.6"/>
+          <text x="55" y="51" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="6.5" fill="#0D2B5C" fontWeight="700">ACRÍLICA PREMIUM</text>
+          <text x="55" y="68" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="700" fontSize="8.5" fill="#444">BRANCO NEVE</text>
+          <text x="55" y="78" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="7" fill="#888">18 litros</text>
+        </svg>
+      </div>
+    );
+  }
+
+  if (type === "paint-standard") {
+    return (
+      <div style={{ ...baseStyle, background: "linear-gradient(160deg, #fef3e2 0%, #ffe8c0 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <svg width="110" height="100" viewBox="0 0 110 100">
+          <ellipse cx="55" cy="88" rx="34" ry="8" fill="rgba(0,0,0,0.08)"/>
+          <rect x="28" y="18" width="54" height="68" rx="6" fill="#ffe4a0" stroke="#e8a830" strokeWidth="1.5"/>
+          <rect x="28" y="18" width="54" height="28" rx="6" fill="#f5c840" stroke="#e8a830" strokeWidth="1.5"/>
+          <rect x="36" y="8" width="38" height="12" rx="3" fill="#e8b828" stroke="#d8a820" strokeWidth="1"/>
+          <rect x="46" y="5" width="18" height="5" rx="2.5" fill="#d8a820" stroke="#c89810" strokeWidth="1"/>
+          <text x="55" y="34" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="13" fill="#0D2B5C">CORAL</text>
+          <text x="55" y="62" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="6.5" fill="#555" fontWeight="700">TINTA LÁTEX</text>
+          <text x="55" y="72" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="700" fontSize="8" fill="#444">STANDARD</text>
+          <text x="55" y="80" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="7" fill="#888">18 litros</text>
+        </svg>
+      </div>
+    );
+  }
+
+  if (type === "grout") {
+    return (
+      <div style={{ ...baseStyle, background: "linear-gradient(160deg, #e8e8e8 0%, #d8d8d8 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <rect x="20" y="25" width="60" height="60" rx="4" fill="#d4d4d4" stroke="#b4b4b4" strokeWidth="1.5"/>
+          <rect x="20" y="25" width="60" height="20" rx="4" fill="#c8c8c8" stroke="#b4b4b4" strokeWidth="1.5"/>
+          <text x="50" y="39" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="9" fill="#0D2B5C">QUARTZOLIT</text>
+          <text x="50" y="58" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="700" fontSize="9" fill="#444">REJUNTE</text>
+          <text x="50" y="68" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="7.5" fill="#666">FLEXÍVEL | 5KG</text>
+          <rect x="30" y="74" width="40" height="6" rx="2" fill="#888"/>
+          <text x="50" y="79" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="5.5" fill="white" fontWeight="700">CINZA MÉDIO</text>
         </svg>
       </div>
     );
@@ -285,13 +386,13 @@ function ProductImage({ type, className }: { type: string; className?: string })
 
   return (
     <div
-      className={className}
       style={{
+        ...baseStyle,
         background: `linear-gradient(135deg, ${style.bg} 0%, ${style.accent}22 100%)`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "3rem",
+        fontSize: "3.5rem",
       }}
     >
       {style.icon}
@@ -362,11 +463,7 @@ function ProductCard({ product }: { product: Product }) {
     >
       {/* Image */}
       <div style={{ position: "relative" }}>
-        <ProductImage
-          type={product.image}
-          className="w-full"
-          style={{ height: 180 }}
-        />
+        <ProductImage type={product.image} />
         {product.tag && (
           <div style={{ position: "absolute", top: 10, left: 10 }}>
             <TagBadge tag={product.tag} />
