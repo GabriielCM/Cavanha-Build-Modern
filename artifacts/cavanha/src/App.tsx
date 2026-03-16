@@ -33,7 +33,13 @@ interface Product {
   category: string;
   tag?: string;
   buyers: number;
-  image: string;
+  imageUrl: string;
+  imageBg: string;
+}
+
+interface CartItem {
+  product: Product;
+  qty: number;
 }
 
 const PRODUCTS: Product[] = [
@@ -48,7 +54,8 @@ const PRODUCTS: Product[] = [
     category: "pisos",
     tag: "Mais Vendido",
     buyers: 47,
-    image: "tile-marble",
+    imageUrl: "https://acdn-us.mitiendanube.com/stores/001/973/835/products/62x119-splendore-pulido-2b263251e2f14eb1cf17278180502792-640-0.webp",
+    imageBg: "#f5f5f5",
   },
   {
     id: 2,
@@ -61,7 +68,8 @@ const PRODUCTS: Product[] = [
     category: "pisos",
     tag: "Oferta",
     buyers: 32,
-    image: "tile-travertine",
+    imageUrl: "https://lojasepa.vteximg.com.br/arquivos/ids/160416-1000-1000/624324560f069-500x500.png.png",
+    imageBg: "#f0e4d0",
   },
   {
     id: 3,
@@ -74,7 +82,8 @@ const PRODUCTS: Product[] = [
     category: "tintas",
     tag: "Frete Grátis",
     buyers: 85,
-    image: "paint-white",
+    imageUrl: "https://digitalprdaddc4dsa.blob.core.windows.net/digital-products-img/products/303/image/display/34/1.webp",
+    imageBg: "#e8f0fe",
   },
   {
     id: 4,
@@ -85,7 +94,8 @@ const PRODUCTS: Product[] = [
     unit: "un",
     category: "tintas",
     buyers: 23,
-    image: "paint-standard",
+    imageUrl: "https://casafernandes.fbitsstatic.net/img/p/tinta-latex-coral-rende-muito-18l-branco-71578/258409.jpg",
+    imageBg: "#fff9e8",
   },
   {
     id: 5,
@@ -98,7 +108,8 @@ const PRODUCTS: Product[] = [
     category: "cimento",
     tag: "Mais Vendido",
     buyers: 156,
-    image: "cement",
+    imageUrl: "https://images.tcdn.com.br/img/img_prod/1188455/cimento_itambe_cp_ii_sc_50_kg_39213_1_b379d91c620cfd5814e35a6ad7e61b85.png",
+    imageBg: "#ececec",
   },
   {
     id: 6,
@@ -110,7 +121,8 @@ const PRODUCTS: Product[] = [
     unit: "sc",
     category: "cimento",
     buyers: 64,
-    image: "mortar",
+    imageUrl: "https://telhanorte.vteximg.com.br/arquivos/ids/1307916/Argamassa-Quartzolit-de-uso-Externo-e-Interno-AC3-Flexvel-20kg-Cinza-27073.jpg",
+    imageBg: "#f0ece4",
   },
   {
     id: 7,
@@ -123,7 +135,8 @@ const PRODUCTS: Product[] = [
     category: "pisos",
     tag: "Oferta",
     buyers: 19,
-    image: "floor-wood",
+    imageUrl: "https://telhanorte.vtexassets.com/arquivos/ids/1316158/2475332-Image-2.jpg",
+    imageBg: "#f5e6c8",
   },
   {
     id: 8,
@@ -134,7 +147,8 @@ const PRODUCTS: Product[] = [
     unit: "un",
     category: "cimento",
     buyers: 38,
-    image: "grout",
+    imageUrl: "https://io.convertiez.com.br/m/cnr/shop/products/images/611/large/rejunte-flexivel-weber-cinza-platina-5kg-quartzolit_722.JPG",
+    imageBg: "#e8e8e8",
   },
 ];
 
@@ -217,185 +231,39 @@ function CavanhaLogoWhite({ size = 44 }: { size?: number }) {
 
 // ─── PRODUCT IMAGE PLACEHOLDER ────────────────────────────────────────────────
 
-const PRODUCT_COLORS: Record<string, { bg: string; accent: string; icon: string }> = {
-  "tile-marble": { bg: "#f8f8f8", accent: "#c8c8c8", icon: "⬛" },
-  "tile-travertine": { bg: "#f5ede3", accent: "#c4a882", icon: "⬜" },
-  "paint-white": { bg: "#e8f0fe", accent: "#4285F4", icon: "🪣" },
-  "paint-standard": { bg: "#fef3e2", accent: "#FB8C00", icon: "🎨" },
-  "cement": { bg: "#ececec", accent: "#888", icon: "🪨" },
-  "mortar": { bg: "#f0ece4", accent: "#a09070", icon: "🏗️" },
-  "floor-wood": { bg: "#f5e6c8", accent: "#8B4513", icon: "🪵" },
-  "grout": { bg: "#e8e8e8", accent: "#666", icon: "🔲" },
-};
+const PRODUCT_IMG_HEIGHT = 192;
 
-const FIXED_IMG_HEIGHT = 180;
-
-function ProductImage({ type }: { type: string }) {
-  const style = PRODUCT_COLORS[type] || { bg: "#f0f0f0", accent: "#888", icon: "📦" };
-  const baseStyle: React.CSSProperties = { width: "100%", height: FIXED_IMG_HEIGHT, overflow: "hidden", flexShrink: 0 };
-
-  if (type === "tile-marble") {
-    return (
-      <div style={{ ...baseStyle, background: style.bg, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <svg width="100%" height="100%" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice">
-          <rect width="240" height="180" fill="#fafafa"/>
-          <rect x="0" y="0" width="120" height="90" fill="#f2f2f2" stroke="#e4e4e4" strokeWidth="1.5"/>
-          <rect x="120" y="0" width="120" height="90" fill="#ebebeb" stroke="#e4e4e4" strokeWidth="1.5"/>
-          <rect x="0" y="90" width="120" height="90" fill="#ededee" stroke="#e4e4e4" strokeWidth="1.5"/>
-          <rect x="120" y="90" width="120" height="90" fill="#f5f5f5" stroke="#e4e4e4" strokeWidth="1.5"/>
-          <path d="M10 28 Q60 18 110 35 Q155 50 220 22" stroke="#d2d2d2" strokeWidth="1.2" fill="none"/>
-          <path d="M5 55 Q55 44 105 58 Q150 70 230 50" stroke="#cacaca" strokeWidth="0.9" fill="none"/>
-          <path d="M15 78 Q65 68 115 82 Q160 94 225 74" stroke="#d4d4d4" strokeWidth="1" fill="none"/>
-          <path d="M8 118 Q68 108 118 122 Q160 132 228 114" stroke="#d0d0d0" strokeWidth="1.1" fill="none"/>
-          <path d="M12 148 Q62 138 112 152 Q155 162 222 144" stroke="#cccccc" strokeWidth="0.9" fill="none"/>
-          <path d="M130 12 Q140 50 128 80 Q118 108 132 145" stroke="#d2d2d2" strokeWidth="1" fill="none"/>
-          <path d="M165 5 Q172 48 162 88 Q153 122 168 165" stroke="#cacaca" strokeWidth="0.8" fill="none"/>
-        </svg>
-      </div>
-    );
-  }
-
-  if (type === "floor-wood") {
-    return (
-      <div style={{ ...baseStyle, background: "#f5e6c8" }}>
-        <svg width="100%" height="100%" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice">
-          <rect width="240" height="180" fill="#f5e6c8"/>
-          {[0,1,2,3,4,5,6,7,8,9,10].map(i => {
-            const y = i * 18;
-            const offset = i % 2 === 0 ? 0 : 30;
-            const fills = ["#c9955c","#b8864e","#d4a76a","#bf8545","#ca9a5e"];
-            return (
-              <g key={i}>
-                <rect x={offset} y={y} width="90" height="16" rx="1.5" fill={fills[i%5]} stroke="#8B5E3C" strokeWidth="0.5"/>
-                <rect x={offset+95} y={y} width="110" height="16" rx="1.5" fill={fills[(i+2)%5]} stroke="#8B5E3C" strokeWidth="0.5"/>
-                {offset === 0 && <rect x="205" y={y} width="35" height="16" rx="1.5" fill={fills[(i+1)%5]} stroke="#8B5E3C" strokeWidth="0.5"/>}
-              </g>
-            );
-          })}
-        </svg>
-      </div>
-    );
-  }
-
-  if (type === "tile-travertine") {
-    return (
-      <div style={{ ...baseStyle, background: style.bg }}>
-        <svg width="100%" height="100%" viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice">
-          <rect width="240" height="180" fill="#f0e4d0"/>
-          <rect x="2" y="2" width="236" height="176" rx="3" fill="#ecdcc4" stroke="#c4a882" strokeWidth="1"/>
-          <path d="M15 22 Q60 16 110 26 Q160 36 225 20" stroke="#c4a882" strokeWidth="1.2" fill="none" opacity="0.7"/>
-          <path d="M8 45 Q55 38 105 48 Q155 58 230 42" stroke="#b89a70" strokeWidth="1" fill="none" opacity="0.6"/>
-          <path d="M12 70 Q58 62 108 72 Q158 82 228 66" stroke="#c4a882" strokeWidth="1.1" fill="none" opacity="0.65"/>
-          <path d="M5 98 Q52 90 102 100 Q152 110 227 94" stroke="#b89a70" strokeWidth="0.9" fill="none" opacity="0.5"/>
-          <path d="M18 125 Q64 116 114 128 Q162 138 228 120" stroke="#c4a882" strokeWidth="1" fill="none" opacity="0.6"/>
-          <path d="M10 152 Q58 142 108 154 Q156 164 226 148" stroke="#b89a70" strokeWidth="0.8" fill="none" opacity="0.45"/>
-          <circle cx="55" cy="38" r="3" fill="#c4a882" opacity="0.45"/>
-          <circle cx="148" cy="72" r="2.5" fill="#b89a70" opacity="0.4"/>
-          <circle cx="88" cy="118" r="3.5" fill="#c4a882" opacity="0.35"/>
-          <circle cx="195" cy="95" r="2" fill="#b89a70" opacity="0.4"/>
-          <circle cx="32" cy="155" r="2.5" fill="#c4a882" opacity="0.35"/>
-        </svg>
-      </div>
-    );
-  }
-
-  if (type === "cement") {
-    return (
-      <div style={{ ...baseStyle, background: "linear-gradient(160deg, #e8e8e8 0%, #d4d4d4 100%)", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 8 }}>
-        <svg width="100" height="100" viewBox="0 0 100 100">
-          <rect x="10" y="35" width="80" height="55" rx="4" fill="#c8c8c8" stroke="#aaa" strokeWidth="1.5"/>
-          <rect x="10" y="35" width="80" height="18" rx="4" fill="#bebebe" stroke="#aaa" strokeWidth="1.5"/>
-          <path d="M25 35 L25 10 L75 10 L75 35" fill="none" stroke="#aaa" strokeWidth="1.5"/>
-          <rect x="28" y="12" width="44" height="22" rx="2" fill="#d4d4d4" stroke="#aaa" strokeWidth="1"/>
-          <text x="50" y="30" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="700" fontSize="9" fill="#888">CP-II 50KG</text>
-          <text x="50" y="62" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="11" fill="#0D2B5C">ITAMBÉ</text>
-          <text x="50" y="76" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="7" fill="#666">CIMENTO PORTLAND</text>
-        </svg>
-      </div>
-    );
-  }
-
-  if (type === "mortar") {
-    return (
-      <div style={{ ...baseStyle, background: "linear-gradient(160deg, #f0ece4 0%, #e0d8cc 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <svg width="100" height="100" viewBox="0 0 100 100">
-          <rect x="15" y="20" width="70" height="70" rx="4" fill="#d8cfc0" stroke="#b8a882" strokeWidth="1.5"/>
-          <rect x="15" y="20" width="70" height="22" rx="4" fill="#c8bfb0" stroke="#b8a882" strokeWidth="1.5"/>
-          <text x="50" y="36" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="10" fill="#0D2B5C">QUARTZOLIT</text>
-          <text x="50" y="58" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="700" fontSize="9" fill="#555">ARGAMASSA</text>
-          <text x="50" y="70" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="7.5" fill="#666">AC-III | 20KG</text>
-          <rect x="30" y="78" width="40" height="6" rx="2" fill="#F5841F" opacity="0.7"/>
-          <text x="50" y="83" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="5.5" fill="white" fontWeight="700">PORCELANATO</text>
-        </svg>
-      </div>
-    );
-  }
-
-  if (type === "paint-white") {
-    return (
-      <div style={{ ...baseStyle, background: "linear-gradient(160deg, #e8f0fe 0%, #d8e8ff 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <svg width="110" height="100" viewBox="0 0 110 100">
-          <ellipse cx="55" cy="88" rx="34" ry="8" fill="rgba(0,0,0,0.08)"/>
-          <rect x="28" y="18" width="54" height="68" rx="6" fill="#e0e8f8" stroke="#b0c0e8" strokeWidth="1.5"/>
-          <rect x="28" y="18" width="54" height="28" rx="6" fill="#d0daf5" stroke="#b0c0e8" strokeWidth="1.5"/>
-          <rect x="36" y="8" width="38" height="12" rx="3" fill="#c8d4f0" stroke="#b0c0e8" strokeWidth="1"/>
-          <rect x="46" y="5" width="18" height="5" rx="2.5" fill="#b8c8e8" stroke="#a0b0d8" strokeWidth="1"/>
-          <text x="55" y="34" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="11" fill="#0D2B5C">SUVINIL</text>
-          <rect x="34" y="40" width="42" height="16" rx="2" fill="white" opacity="0.6"/>
-          <text x="55" y="51" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="6.5" fill="#0D2B5C" fontWeight="700">ACRÍLICA PREMIUM</text>
-          <text x="55" y="68" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="700" fontSize="8.5" fill="#444">BRANCO NEVE</text>
-          <text x="55" y="78" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="7" fill="#888">18 litros</text>
-        </svg>
-      </div>
-    );
-  }
-
-  if (type === "paint-standard") {
-    return (
-      <div style={{ ...baseStyle, background: "linear-gradient(160deg, #fef3e2 0%, #ffe8c0 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <svg width="110" height="100" viewBox="0 0 110 100">
-          <ellipse cx="55" cy="88" rx="34" ry="8" fill="rgba(0,0,0,0.08)"/>
-          <rect x="28" y="18" width="54" height="68" rx="6" fill="#ffe4a0" stroke="#e8a830" strokeWidth="1.5"/>
-          <rect x="28" y="18" width="54" height="28" rx="6" fill="#f5c840" stroke="#e8a830" strokeWidth="1.5"/>
-          <rect x="36" y="8" width="38" height="12" rx="3" fill="#e8b828" stroke="#d8a820" strokeWidth="1"/>
-          <rect x="46" y="5" width="18" height="5" rx="2.5" fill="#d8a820" stroke="#c89810" strokeWidth="1"/>
-          <text x="55" y="34" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="13" fill="#0D2B5C">CORAL</text>
-          <text x="55" y="62" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="6.5" fill="#555" fontWeight="700">TINTA LÁTEX</text>
-          <text x="55" y="72" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="700" fontSize="8" fill="#444">STANDARD</text>
-          <text x="55" y="80" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="7" fill="#888">18 litros</text>
-        </svg>
-      </div>
-    );
-  }
-
-  if (type === "grout") {
-    return (
-      <div style={{ ...baseStyle, background: "linear-gradient(160deg, #e8e8e8 0%, #d8d8d8 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <svg width="100" height="100" viewBox="0 0 100 100">
-          <rect x="20" y="25" width="60" height="60" rx="4" fill="#d4d4d4" stroke="#b4b4b4" strokeWidth="1.5"/>
-          <rect x="20" y="25" width="60" height="20" rx="4" fill="#c8c8c8" stroke="#b4b4b4" strokeWidth="1.5"/>
-          <text x="50" y="39" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="800" fontSize="9" fill="#0D2B5C">QUARTZOLIT</text>
-          <text x="50" y="58" textAnchor="middle" fontFamily="Barlow Condensed, sans-serif" fontWeight="700" fontSize="9" fill="#444">REJUNTE</text>
-          <text x="50" y="68" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="7.5" fill="#666">FLEXÍVEL | 5KG</text>
-          <rect x="30" y="74" width="40" height="6" rx="2" fill="#888"/>
-          <text x="50" y="79" textAnchor="middle" fontFamily="Nunito, sans-serif" fontSize="5.5" fill="white" fontWeight="700">CINZA MÉDIO</text>
-        </svg>
-      </div>
-    );
-  }
-
+function ProductImage({ imageUrl, imageBg, name }: { imageUrl: string; imageBg: string; name: string }) {
+  const [error, setError] = useState(false);
   return (
     <div
       style={{
-        ...baseStyle,
-        background: `linear-gradient(135deg, ${style.bg} 0%, ${style.accent}22 100%)`,
+        width: "100%",
+        height: PRODUCT_IMG_HEIGHT,
+        background: imageBg,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "3.5rem",
+        overflow: "hidden",
+        flexShrink: 0,
       }}
     >
-      {style.icon}
+      {!error ? (
+        <img
+          src={imageUrl}
+          alt={name}
+          onError={() => setError(true)}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            padding: "12px",
+            boxSizing: "border-box",
+          }}
+        />
+      ) : (
+        <span style={{ fontSize: "3rem", opacity: 0.4 }}>📦</span>
+      )}
     </div>
   );
 }
@@ -463,7 +331,7 @@ function ProductCard({ product }: { product: Product }) {
     >
       {/* Image */}
       <div style={{ position: "relative" }}>
-        <ProductImage type={product.image} />
+        <ProductImage imageUrl={product.imageUrl} imageBg={product.imageBg} name={product.name} />
         {product.tag && (
           <div style={{ position: "absolute", top: 10, left: 10 }}>
             <TagBadge tag={product.tag} />
@@ -586,6 +454,43 @@ function CloseIcon({ size = 24 }: { size?: number }) {
   );
 }
 
+function CartIcon({ size = 22 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <path d="M16 10a4 4 0 01-8 0"/>
+    </svg>
+  );
+}
+
+function TrashIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="3 6 5 6 21 6"/>
+      <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+      <path d="M10 11v6M14 11v6"/>
+      <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
+    </svg>
+  );
+}
+
+function PlusIcon({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+      <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+  );
+}
+
+function MinusIcon({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+      <line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+  );
+}
+
 function PhoneIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -649,7 +554,7 @@ function InstagramIcon({ size = 20 }: { size?: number }) {
 
 // ─── HEADER ──────────────────────────────────────────────────────────────────
 
-function Header({ onCategoryClick }: { onCategoryClick: (cat: string) => void }) {
+function Header({ onCategoryClick, cartCount, onOpenCart }: { onCategoryClick: (cat: string) => void; cartCount: number; onOpenCart: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -1756,7 +1661,7 @@ function Footer() {
             <h4 style={{ fontFamily: "Barlow Condensed, sans-serif", fontWeight: 700, fontSize: "1rem", color: "#F5841F", marginBottom: 16, letterSpacing: "0.05em" }}>CONTATO</h4>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               <div style={{ fontFamily: "Nunito, sans-serif", fontSize: "0.85rem", color: "rgba(255,255,255,0.7)", display: "flex", gap: 8, alignItems: "flex-start" }}>
-                <MapPinIcon size={16} style={{ flexShrink: 0, marginTop: 2 }} />
+                <span style={{ flexShrink: 0, marginTop: 2, display: "flex" }}><MapPinIcon size={16} /></span>
                 <span>Campo Mourão, PR<br/>Paraná Central</span>
               </div>
               <div style={{ fontFamily: "Nunito, sans-serif", fontSize: "0.85rem", color: "rgba(255,255,255,0.7)", display: "flex", gap: 8, alignItems: "center" }}>
@@ -1861,10 +1766,191 @@ function WhatsAppFloat() {
   );
 }
 
-// ─── APP ──────────────────────────────────────────────────────────────────────
+// ─── CART DRAWER ─────────────────────────────────────────────────────────────
+
+function CartDrawer({
+  items,
+  onClose,
+  onChangeQty,
+  onRemove,
+}: {
+  items: CartItem[];
+  onClose: () => void;
+  onChangeQty: (id: number, delta: number) => void;
+  onRemove: (id: number) => void;
+}) {
+  const total = items.reduce((s, i) => s + i.product.price * i.qty, 0);
+  const totalItems = items.reduce((s, i) => s + i.qty, 0);
+
+  const buildWhatsappMsg = () => {
+    const lines = items.map(i => `• ${i.product.name} (${i.product.brand}) — ${i.qty}x R$ ${i.product.price.toFixed(2).replace(".", ",")}`).join("\n");
+    const msg = `Olá! Quero fazer um pedido:\n\n${lines}\n\n*Total estimado: R$ ${total.toFixed(2).replace(".", ",")}*\n\nPoderia confirmar disponibilidade e prazo de entrega?`;
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  };
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        onClick={onClose}
+        style={{
+          position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 999,
+          animation: "fadeIn 0.2s ease",
+        }}
+      />
+
+      {/* Drawer */}
+      <div
+        style={{
+          position: "fixed", top: 0, right: 0, bottom: 0, width: "100%", maxWidth: 420,
+          background: "white", zIndex: 1000, display: "flex", flexDirection: "column",
+          boxShadow: "-8px 0 32px rgba(13,43,92,0.18)",
+          animation: "slideInRight 0.28s cubic-bezier(.4,0,.2,1)",
+        }}
+      >
+        {/* Header */}
+        <div style={{
+          padding: "20px 24px",
+          borderBottom: "1px solid rgba(13,43,92,0.1)",
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          background: "#0D2B5C", color: "white",
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <CartIcon size={22} />
+            <span style={{ fontFamily: "Barlow Condensed, sans-serif", fontWeight: 800, fontSize: "1.3rem", letterSpacing: "0.02em" }}>
+              Carrinho
+            </span>
+            {totalItems > 0 && (
+              <span style={{
+                background: "#F5841F", color: "white", borderRadius: 999,
+                fontSize: "0.72rem", fontWeight: 800, padding: "2px 8px",
+                fontFamily: "Nunito, sans-serif",
+              }}>
+                {totalItems} {totalItems === 1 ? "item" : "itens"}
+              </span>
+            )}
+          </div>
+          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "white", display: "flex", padding: 4 }}>
+            <CloseIcon size={22} />
+          </button>
+        </div>
+
+        {/* Items */}
+        <div style={{ flex: 1, overflowY: "auto", padding: "16px 24px", display: "flex", flexDirection: "column", gap: 14 }}>
+          {items.length === 0 ? (
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16, paddingTop: 60 }}>
+              <div style={{ fontSize: "4rem", opacity: 0.3 }}>🛒</div>
+              <p style={{ fontFamily: "Nunito, sans-serif", color: "#999", fontSize: "0.95rem", textAlign: "center" }}>
+                Seu carrinho está vazio.<br/>Adicione produtos para começar!
+              </p>
+            </div>
+          ) : (
+            items.map(item => (
+              <div key={item.product.id} style={{
+                display: "flex", gap: 12, padding: 12,
+                background: "#f8fafc", borderRadius: 12,
+                border: "1px solid rgba(13,43,92,0.07)",
+              }}>
+                {/* Thumb */}
+                <div style={{
+                  width: 64, height: 64, borderRadius: 10, overflow: "hidden", flexShrink: 0,
+                  background: item.product.imageBg, display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  <img
+                    src={item.product.imageUrl}
+                    alt={item.product.name}
+                    style={{ width: "100%", height: "100%", objectFit: "contain", padding: 4 }}
+                    onError={e => { (e.target as HTMLImageElement).style.display = "none"; }}
+                  />
+                </div>
+                {/* Info */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: "0.68rem", color: "#F5841F", fontWeight: 700, fontFamily: "Nunito, sans-serif", textTransform: "uppercase" }}>
+                    {item.product.brand}
+                  </div>
+                  <div style={{ fontFamily: "Barlow Condensed, sans-serif", fontWeight: 700, fontSize: "0.9rem", color: "#0D2B5C", lineHeight: 1.2, marginBottom: 6, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {item.product.name}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                    {/* Qty controls */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                      <button
+                        onClick={() => onChangeQty(item.product.id, -1)}
+                        style={{ width: 26, height: 26, borderRadius: 8, border: "1.5px solid rgba(13,43,92,0.2)", background: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#0D2B5C" }}
+                      >
+                        <MinusIcon size={12} />
+                      </button>
+                      <span style={{ fontFamily: "Barlow Condensed, sans-serif", fontWeight: 700, fontSize: "1rem", color: "#0D2B5C", minWidth: 20, textAlign: "center" }}>
+                        {item.qty}
+                      </span>
+                      <button
+                        onClick={() => onChangeQty(item.product.id, 1)}
+                        style={{ width: 26, height: 26, borderRadius: 8, border: "1.5px solid rgba(13,43,92,0.2)", background: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#0D2B5C" }}
+                      >
+                        <PlusIcon size={12} />
+                      </button>
+                    </div>
+                    {/* Price + remove */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <span style={{ fontFamily: "Barlow Condensed, sans-serif", fontWeight: 800, fontSize: "1rem", color: "#0D2B5C" }}>
+                        R$ {(item.product.price * item.qty).toFixed(2).replace(".", ",")}
+                      </span>
+                      <button
+                        onClick={() => onRemove(item.product.id)}
+                        style={{ background: "none", border: "none", cursor: "pointer", color: "#e53e3e", padding: 4, display: "flex" }}
+                      >
+                        <TrashIcon size={15} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Footer */}
+        {items.length > 0 && (
+          <div style={{ padding: "16px 24px", borderTop: "1px solid rgba(13,43,92,0.1)", display: "flex", flexDirection: "column", gap: 12 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontFamily: "Nunito, sans-serif", fontSize: "0.9rem", color: "#666" }}>Total estimado</span>
+              <span style={{ fontFamily: "Barlow Condensed, sans-serif", fontWeight: 800, fontSize: "1.5rem", color: "#0D2B5C" }}>
+                R$ {total.toFixed(2).replace(".", ",")}
+              </span>
+            </div>
+            <button
+              className="btn-orange"
+              onClick={() => window.open(buildWhatsappMsg(), "_blank")}
+              style={{
+                padding: "14px 20px", borderRadius: 14, border: "none", color: "white",
+                fontFamily: "Nunito, sans-serif", fontWeight: 700, fontSize: "0.95rem", cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
+              }}
+            >
+              <WhatsappIcon size={18} />
+              Finalizar pedido pelo WhatsApp
+            </button>
+            <p style={{ fontFamily: "Nunito, sans-serif", fontSize: "0.72rem", color: "#999", textAlign: "center" }}>
+              Os preços são estimados. O valor final será confirmado pela loja.
+            </p>
+          </div>
+        )}
+      </div>
+
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes slideInRight { from { transform: translateX(100%) } to { transform: translateX(0) } }
+      `}</style>
+    </>
+  );
+}
+
+// ─── MAIN APP ─────────────────────────────────────────────────────────────────
 
 function CavanhaApp() {
   const [activeCategory, setActiveCategory] = useState("");
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartOpen, setCartOpen] = useState(false);
 
   const handleCategoryClick = (cat: string) => {
     setActiveCategory(cat);
@@ -1873,21 +1959,52 @@ function CavanhaApp() {
     }, 100);
   };
 
+  const handleAddToCart = (product: Product) => {
+    setCart(prev => {
+      const existing = prev.find(i => i.product.id === product.id);
+      if (existing) return prev.map(i => i.product.id === product.id ? { ...i, qty: i.qty + 1 } : i);
+      return [...prev, { product, qty: 1 }];
+    });
+    setCartOpen(true);
+  };
+
+  const handleChangeQty = (id: number, delta: number) => {
+    setCart(prev => prev.flatMap(i => {
+      if (i.product.id !== id) return [i];
+      const newQty = i.qty + delta;
+      return newQty <= 0 ? [] : [{ ...i, qty: newQty }];
+    }));
+  };
+
+  const handleRemove = (id: number) => {
+    setCart(prev => prev.filter(i => i.product.id !== id));
+  };
+
+  const cartCount = cart.reduce((s, i) => s + i.qty, 0);
+
   return (
     <div style={{ minHeight: "100vh", background: "#f8fafc" }}>
-      <Header onCategoryClick={handleCategoryClick} />
+      <Header onCategoryClick={handleCategoryClick} cartCount={cartCount} onOpenCart={() => setCartOpen(true)} />
       <main>
         <Hero />
         <TrustBar />
         <PromoBanner />
         <Categories activeCategory={activeCategory} onSelect={handleCategoryClick} />
-        <ProductsSection activeCategory={activeCategory} />
+        <ProductsSection activeCategory={activeCategory} onAddToCart={handleAddToCart} />
         <Testimonials />
         <DeliverySection />
         <SocialCTA />
       </main>
       <Footer />
       <WhatsAppFloat />
+      {cartOpen && (
+        <CartDrawer
+          items={cart}
+          onClose={() => setCartOpen(false)}
+          onChangeQty={handleChangeQty}
+          onRemove={handleRemove}
+        />
+      )}
     </div>
   );
 }
