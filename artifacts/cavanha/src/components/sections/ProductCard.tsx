@@ -1,6 +1,6 @@
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ShoppingCart, MessageCircle, Eye } from "lucide-react";
 import type { Product } from "@/lib/mock-data";
 import { WHATSAPP_MSG } from "@/lib/mock-data";
@@ -12,6 +12,22 @@ interface ProductCardProps {
 
 export function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const [currentImg, setCurrentImg] = useState(0);
+  const images = product.images?.length ? product.images : [product.imageUrl];
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    if (!isMobile && !isHovered) {
+      setCurrentImg(0);
+      return;
+    }
+    const interval = setInterval(() => {
+      setCurrentImg((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [images.length, isHovered]);
+
   const hasDiscount = product.oldPrice && product.oldPrice > product.price;
   const discountPercent = hasDiscount
     ? Math.round(((product.oldPrice! - product.price) / product.oldPrice!) * 100)
@@ -19,7 +35,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
 
   return (
     <motion.div
-      className="group relative flex w-full min-w-[220px] max-w-[280px] flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm"
+      className="group relative flex h-[420px] w-[280px] min-w-[280px] max-w-[280px] flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       whileHover={{ y: -6 }}
@@ -30,13 +46,33 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
         className="relative flex h-52 items-center justify-center overflow-hidden p-4"
         style={{ backgroundColor: product.imageBg }}
       >
-        <motion.img
-          src={product.imageUrl}
-          alt={product.name}
-          className="h-full max-h-40 w-auto object-contain"
-          animate={{ scale: isHovered ? 1.08 : 1 }}
-          transition={{ duration: 0.4 }}
-        />
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentImg}
+            src={images[currentImg]}
+            alt={product.name}
+            className="h-full max-h-40 w-auto object-contain"
+            initial={images.length > 1 ? { opacity: 0 } : false}
+            animate={{ opacity: 1, scale: isHovered ? 1.08 : 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          />
+        </AnimatePresence>
+
+        {/* Image Dots */}
+        {images.length > 1 && (
+          <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentImg(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === currentImg ? "w-4 bg-[#F5841F]" : "w-1.5 bg-gray-300"
+                }`}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Tag Badge */}
         {product.tag && (
@@ -68,58 +104,41 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
 
         {/* Discount Badge */}
         {hasDiscount && (
-          <motion.div
-            className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-red-500 font-[Barlow_Condensed,sans-serif] text-xs font-black text-white"
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
+          <div
+            className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-red-500 font-[Barlow_Condensed,sans-serif] text-xs font-black text-white shadow-md"
           >
             -{discountPercent}%
-          </motion.div>
+          </div>
         )}
 
-        {/* Hover Overlay */}
+        {/* Hover Overlay — barra compacta no rodapé */}
         <AnimatePresence>
           {isHovered && (
             <motion.div
-              className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#0D2B5C]/80 backdrop-blur-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              className="absolute inset-x-0 bottom-0 z-20 flex items-center justify-center gap-2 rounded-t-xl bg-[#0D2B5C]/90 px-3 py-2.5 backdrop-blur-sm"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 20, opacity: 0 }}
               transition={{ duration: 0.25 }}
             >
-              <motion.span
-                className="font-[Nunito,sans-serif] text-xs font-semibold uppercase tracking-widest text-gray-300"
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.05 }}
-              >
-                {product.brand}
-              </motion.span>
-
               <motion.button
-                className="flex items-center gap-2 rounded-full bg-white px-5 py-2.5 font-[Barlow_Condensed,sans-serif] text-sm font-bold uppercase tracking-wider text-[#0D2B5C] shadow-lg"
-                initial={{ y: 15, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.1 }}
+                className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 font-[Barlow_Condensed,sans-serif] text-xs font-bold uppercase tracking-wider text-[#0D2B5C] shadow-md"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Eye className="h-4 w-4" />
-                Ver Detalhes
+                <Eye className="h-3.5 w-3.5" />
+                Detalhes
               </motion.button>
 
               <motion.a
                 href={WHATSAPP_MSG(product.name)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 font-[Barlow_Condensed,sans-serif] text-sm font-bold uppercase tracking-wider text-white shadow-lg"
-                initial={{ y: 15, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.15 }}
+                className="flex items-center gap-1.5 rounded-full bg-[#25D366] px-3 py-1.5 font-[Barlow_Condensed,sans-serif] text-xs font-bold uppercase tracking-wider text-white shadow-md"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <MessageCircle className="h-4 w-4" />
+                <MessageCircle className="h-3.5 w-3.5" />
                 WhatsApp
               </motion.a>
             </motion.div>

@@ -44,7 +44,7 @@ export function SocialCTA() {
           className="mb-14 text-center"
         >
           <h2 className="font-[Barlow_Condensed,sans-serif] text-4xl font-black uppercase leading-none tracking-tight text-white md:text-5xl lg:text-6xl">
-            Siga a{" "}
+            Siga o{" "}
             <span className="text-[#F5841F]">Cavanha</span>
           </h2>
           <p className="mx-auto mt-4 max-w-md font-[Nunito,sans-serif] text-base text-gray-400">

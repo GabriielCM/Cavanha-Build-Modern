@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Nunito:wght@300;400;500;600;700;800&display=swap');
+@import "leaflet/dist/leaflet.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -184,3 +185,142 @@ html {
 /* Hide scrollbar for snap containers */
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ─── LEAFLET FIXES ─────────────────────────────────────────────────────── */
+.leaflet-tile-pane img { max-width: none !important; }
+.leaflet-container { font-family: 'Nunito', sans-serif; }
+
+/* ─── DELIVERY MAP ──────────────────────────────────────────────────────── */
+
+/* Navy tint on tiles */
+.delivery-map .leaflet-tile-pane {
+  filter: saturate(0.7) brightness(1.05) hue-rotate(10deg);
+}
+
+/* Glowing coverage circle */
+.delivery-map .glow-circle {
+  animation: circle-glow 2.5s ease-in-out infinite;
+}
+@keyframes circle-glow {
+  0%, 100% { stroke-opacity: 0.3; filter: drop-shadow(0 0 4px #F5841F); }
+  50% { stroke-opacity: 0.7; filter: drop-shadow(0 0 14px #F5841F); }
+}
+
+/* Store marker */
+.store-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #F5841F;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(245,132,31,0.4), 0 3px 12px rgba(0,0,0,0.3);
+  color: white;
+  transition: transform 0.2s;
+}
+.store-marker:hover { transform: scale(1.15); }
+
+/* City marker */
+.city-marker {
+  width: 12px;
+  height: 12px;
+  background: #0D2B5C;
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Active/pulsing marker */
+.marker-active {
+  animation: marker-pulse 1.5s ease-in-out infinite;
+}
+@keyframes marker-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245,132,31,0.6); }
+  50% { transform: scale(1.4); box-shadow: 0 0 0 12px rgba(245,132,31,0); }
+}
+
+/* Premium permanent tooltip */
+.city-tooltip {
+  background: rgba(255,255,255,0.92) !important;
+  backdrop-filter: blur(4px);
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 2px 8px !important;
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 10px !important;
+  color: #0D2B5C !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12) !important;
+  white-space: nowrap;
+}
+.city-tooltip::before { display: none !important; }
+
+/* Premium popup */
+.premium-popup .leaflet-popup-content-wrapper {
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.premium-popup .leaflet-popup-content {
+  margin: 0;
+  width: auto !important;
+}
+.premium-popup .leaflet-popup-tip-container { display: none; }
+
+/* Store popup */
+.store-popup .leaflet-popup-content-wrapper {
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+  border: 2px solid rgba(245,132,31,0.3);
+}
+.store-popup .leaflet-popup-content {
+  margin: 0;
+  width: auto !important;
+}
+.store-popup .leaflet-popup-tip-container { display: none; }
+
+/* Hide default zoom control styling for custom position */
+.delivery-map .leaflet-control-zoom {
+  border: none !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+.delivery-map .leaflet-control-zoom a {
+  background: rgba(255,255,255,0.9) !important;
+  backdrop-filter: blur(8px);
+  color: #0D2B5C !important;
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  font-size: 18px !important;
+}
+.delivery-map .leaflet-control-zoom a:hover {
+  background: white !important;
+  color: #F5841F !important;
+}
+
+/* ─── PROMO BADGE GLOW ──────────────────────────────────────────────────── */
+@keyframes badge-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+  50% { box-shadow: 0 0 20px 4px rgba(255,255,255,0.2); }
+}
+.promo-badge-glow {
+  animation: badge-glow 2s ease-in-out infinite;
+}
+
+/* Ant-path flowing animation */
+.ant-path-line {
+  animation: ant-march 1.5s linear infinite;
+}
+@keyframes ant-march {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -20; }
+}

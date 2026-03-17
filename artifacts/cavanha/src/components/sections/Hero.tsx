@@ -45,7 +45,6 @@ export function Hero() {
       style={{
         minHeight: "100vh",
         background: "linear-gradient(135deg, #0D2B5C 0%, #0f3470 40%, #1a4080 70%, #0D2B5C 100%)",
-        opacity: scrollOpacity,
       }}
     >
       {/* Grid pattern */}
@@ -99,10 +98,13 @@ export function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{ x: layer2X, y: layer2Y }}
       >
-        {/* Decorative lines */}
-        <svg className="absolute top-[15%] right-[15%] opacity-10" width="120" height="120" viewBox="0 0 120 120">
-          <rect x="10" y="10" width="100" height="100" rx="20" fill="none" stroke="white" strokeWidth="1" />
-        </svg>
+        {/* Logo decorativa */}
+        <img
+          src="/logo-cavanha.png"
+          alt=""
+          className="absolute top-[8%] right-[8%] opacity-15 rounded-3xl"
+          style={{ width: 220, height: 220 }}
+        />
         <svg className="absolute bottom-[20%] left-[8%] opacity-10" width="80" height="80" viewBox="0 0 80 80">
           <circle cx="40" cy="40" r="35" fill="none" stroke="#F5841F" strokeWidth="1" />
         </svg>
@@ -234,8 +236,8 @@ export function Hero() {
               }}
             >
               <img
-                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=600&fit=crop"
-                alt="Construcao moderna"
+                src="/fachada.png"
+                alt="Fachada Cavanha"
                 className="w-full h-full object-cover"
               />
               <div

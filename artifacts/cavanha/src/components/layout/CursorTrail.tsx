@@ -78,7 +78,7 @@ export function CursorTrail() {
 
         const alpha = p.life / p.maxLife;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * alpha, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, Math.max(0, p.size * alpha), 0, Math.PI * 2);
         ctx.fillStyle = p.color + Math.floor(alpha * 255).toString(16).padStart(2, "0");
         ctx.fill();
       }

@@ -1,13 +1,29 @@
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { CATEGORIES } from "@/lib/mock-data";
 import { staggerContainerSlow, fadeInLeft } from "@/lib/animations";
+import { ChevronDown } from "lucide-react";
 
 interface CategoriesProps {
   onSelect: (categoryId: string) => void;
 }
 
 export function Categories({ onSelect }: CategoriesProps) {
+  const [expanded, setExpanded] = useState(false);
+
+  const handleToggle = () => {
+    if (expanded) {
+      setExpanded(false);
+      // After collapsing, scroll so the button is visible at the bottom of the viewport
+      requestAnimationFrame(() => {
+        document.getElementById("categories-toggle")?.scrollIntoView({ behavior: "smooth", block: "end" });
+      });
+    } else {
+      setExpanded(true);
+    }
+  };
+
   return (
     <section className="w-full bg-gray-50 py-20 md:py-28" id="categorias">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -40,7 +56,9 @@ export function Categories({ onSelect }: CategoriesProps) {
               key={category.id}
               variants={fadeInLeft}
               onClick={() => onSelect(category.id)}
-              className="group relative h-64 cursor-pointer overflow-hidden rounded-2xl border-none bg-transparent p-0 text-left sm:h-72 lg:h-80"
+              className={`group relative h-64 cursor-pointer overflow-hidden rounded-2xl border-none bg-transparent p-0 text-left sm:h-72 lg:h-80${
+                index >= 3 && !expanded ? " hidden sm:block" : ""
+              }`}
             >
               {/* Background Image */}
               <motion.div
@@ -76,6 +94,17 @@ export function Categories({ onSelect }: CategoriesProps) {
             </motion.button>
           ))}
         </motion.div>
+
+        {/* Toggle button — mobile only */}
+        <div id="categories-toggle" className="mt-6 flex justify-center sm:hidden">
+          <button
+            onClick={handleToggle}
+            className="flex items-center gap-2 rounded-full border border-[#0D2B5C]/20 bg-white px-6 py-3 font-[Nunito,sans-serif] text-sm font-bold text-[#0D2B5C] shadow-sm transition-all active:scale-95"
+          >
+            {expanded ? "Ver menos" : "Ver mais categorias"}
+            <ChevronDown size={16} className={`transition-transform duration-300${expanded ? " rotate-180" : ""}`} />
+          </button>
+        </div>
       </div>
     </section>
   );

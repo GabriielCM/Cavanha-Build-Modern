@@ -25,31 +25,31 @@ export function BrandsMarquee() {
         <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-24 bg-gradient-to-r from-white to-transparent" />
         <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-white to-transparent" />
 
-        {/* Scrolling Track */}
-        <motion.div
-          className="flex items-center gap-16 group-hover:[animation-play-state:paused]"
-          animate={{ x: [0, -1920] }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 30,
-              ease: "linear",
-            },
-          }}
+        {/* Scrolling Track — uses CSS marquee animation from index.css */}
+        <div
+          className="marquee-track flex items-center gap-16"
           style={{ width: "fit-content" }}
         >
           {duplicatedBrands.map((brand, index) => (
             <div
-              key={`${brand}-${index}`}
-              className="flex h-16 min-w-[140px] items-center justify-center px-4"
+              key={`${brand.name}-${index}`}
+              className="flex h-28 min-w-[200px] items-center justify-center px-4"
             >
-              <span className="whitespace-nowrap font-[Barlow_Condensed,sans-serif] text-2xl font-black uppercase tracking-wider text-gray-300 transition-colors duration-300 hover:text-[#0D2B5C]">
-                {brand}
-              </span>
+              {brand.logo ? (
+                <img
+                  src={brand.logo}
+                  alt={brand.name}
+                  className="h-28 w-[180px] object-contain transition-all duration-400 hover:scale-140"
+                  style={brand.scale ? { transform: `scale(${brand.scale})` } : undefined}
+                />
+              ) : (
+                <span className="whitespace-nowrap font-[Barlow_Condensed,sans-serif] text-3xl font-black uppercase tracking-wider text-gray-500 transition-all duration-400 hover:scale-140 hover:text-[#0D2B5C]">
+                  {brand.name}
+                </span>
+              )}
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

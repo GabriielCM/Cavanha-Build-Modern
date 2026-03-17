@@ -40,17 +40,18 @@ export function Sidebar({ onSearchClick, onCartClick, cartCount }: SidebarProps)
       }}
     >
       {/* Logo */}
-      <div className="mb-6 flex items-center justify-center w-full px-3">
+      <div className="mb-2 flex items-center justify-center w-full px-3">
         <motion.div
           className="flex items-center gap-2 overflow-hidden"
           animate={{ justifyContent: isExpanded ? "flex-start" : "center" }}
         >
-          <div
-            className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ background: "#F5841F" }}
-          >
-            <span className="text-white font-bold text-sm font-[Barlow_Condensed,sans-serif]">C</span>
-          </div>
+          <motion.img
+            src="/logo-cavanha.png"
+            alt="Cavanha"
+            className="flex-shrink-0 rounded-lg object-contain"
+            animate={{ width: isExpanded ? 112 : 48, height: isExpanded ? 112 : 48 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          />
           <AnimatePresence>
             {isExpanded && (
               <motion.span
