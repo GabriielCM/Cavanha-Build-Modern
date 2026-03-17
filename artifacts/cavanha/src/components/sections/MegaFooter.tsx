@@ -25,12 +25,12 @@ export function MegaFooter() {
                 <span className="font-[Barlow_Condensed,sans-serif] text-lg font-black uppercase tracking-wider text-white">
                   Cavanha
                 </span>
-                <span className="block font-[Nunito,sans-serif] text-[10px] uppercase tracking-[0.2em] text-gray-500">
+                <span className="block font-[Nunito,sans-serif] text-[10px] uppercase tracking-[0.2em] text-gray-400">
                   Materiais de Construcao
                 </span>
               </div>
             </div>
-            <p className="mb-6 font-[Nunito,sans-serif] text-sm leading-relaxed text-gray-500">
+            <p className="mb-6 font-[Nunito,sans-serif] text-sm leading-relaxed text-gray-400">
               Construindo sonhos em Campo Mourao e regiao desde 2014. Qualidade, preco
               justo e atendimento que faz a diferenca.
             </p>
@@ -39,7 +39,7 @@ export function MegaFooter() {
                 href="https://instagram.com/cavanha.cm"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-gray-500 transition-colors hover:bg-[#E1306C] hover:text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-gray-300 transition-colors hover:bg-[#E1306C] hover:text-white"
                 whileHover={{ scale: 1.1 }}
               >
                 <Instagram className="h-4 w-4" />
@@ -48,7 +48,7 @@ export function MegaFooter() {
                 href="https://facebook.com/cavanhamateriais"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-gray-500 transition-colors hover:bg-[#1877F2] hover:text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-gray-300 transition-colors hover:bg-[#1877F2] hover:text-white"
                 whileHover={{ scale: 1.1 }}
               >
                 <Facebook className="h-4 w-4" />
@@ -57,7 +57,7 @@ export function MegaFooter() {
                 href={WHATSAPP_MSG()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-gray-500 transition-colors hover:bg-[#25D366] hover:text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-gray-300 transition-colors hover:bg-[#25D366] hover:text-white"
                 whileHover={{ scale: 1.1 }}
               >
                 <MessageCircle className="h-4 w-4" />
@@ -75,13 +75,13 @@ export function MegaFooter() {
                 <li key={cat.id}>
                   <a
                     href={`#${cat.id}`}
-                    className="group inline-flex items-center font-[Nunito,sans-serif] text-sm text-gray-500 transition-colors hover:text-white"
+                    className="group inline-flex items-center font-[Nunito,sans-serif] text-sm text-gray-400 transition-colors hover:text-white"
                   >
                     <span className="relative">
                       {cat.label}
                       <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-[#F5841F] transition-all duration-300 group-hover:w-full" />
                     </span>
-                    <span className="ml-2 font-[Nunito,sans-serif] text-xs text-gray-700">
+                    <span className="ml-2 font-[Nunito,sans-serif] text-xs text-gray-400">
                       ({cat.count})
                     </span>
                   </a>
@@ -100,7 +100,7 @@ export function MegaFooter() {
                 <li key={item.id}>
                   <a
                     href={item.section ? `#${item.section}` : item.href || "#"}
-                    className="group inline-flex items-center font-[Nunito,sans-serif] text-sm text-gray-500 transition-colors hover:text-white"
+                    className="group inline-flex items-center font-[Nunito,sans-serif] text-sm text-gray-400 transition-colors hover:text-white"
                   >
                     <span className="relative">
                       {item.label}
@@ -124,7 +124,7 @@ export function MegaFooter() {
                   <p className="font-[Nunito,sans-serif] text-sm font-semibold text-white">
                     (44) 99999-9999
                   </p>
-                  <p className="font-[Nunito,sans-serif] text-xs text-gray-500">
+                  <p className="font-[Nunito,sans-serif] text-xs text-gray-400">
                     WhatsApp &amp; Ligacoes
                   </p>
                 </div>
@@ -154,10 +154,10 @@ export function MegaFooter() {
             </ul>
 
             {/* Map Placeholder */}
-            <div className="mt-6 flex h-32 items-center justify-center rounded-xl bg-[#0a1a36] border border-white/5">
+            <div className="mt-6 flex h-32 items-center justify-center rounded-xl bg-[#0a1a36] border border-white/10">
               <div className="text-center">
-                <MapPin className="mx-auto mb-1 h-6 w-6 text-[#F5841F]/50" />
-                <span className="font-[Nunito,sans-serif] text-xs text-gray-600">
+                <MapPin className="mx-auto mb-1 h-6 w-6 text-[#F5841F]/80" />
+                <span className="font-[Nunito,sans-serif] text-xs text-gray-400">
                   Google Maps
                 </span>
               </div>
@@ -167,18 +167,18 @@ export function MegaFooter() {
 
         {/* Copyright */}
         <motion.div
-          className="mt-16 border-t border-white/5 py-6"
+          className="mt-16 border-t border-white/10 py-6"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
           <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-            <p className="font-[Nunito,sans-serif] text-xs text-gray-600">
+            <p className="font-[Nunito,sans-serif] text-xs text-gray-400">
               &copy; {new Date().getFullYear()} Cavanha Materiais de Construcao. Todos os
               direitos reservados.
             </p>
-            <p className="font-[Nunito,sans-serif] text-xs text-gray-700">
+            <p className="font-[Nunito,sans-serif] text-xs text-gray-400">
               CNPJ: 00.000.000/0001-00
             </p>
           </div>

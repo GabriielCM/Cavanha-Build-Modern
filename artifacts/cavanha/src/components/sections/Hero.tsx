@@ -102,24 +102,24 @@ export function Hero() {
         <img
           src="/logo-cavanha.png"
           alt=""
-          className="absolute top-[8%] right-[8%] opacity-15 rounded-3xl"
-          style={{ width: 220, height: 220 }}
+          className="absolute top-[8%] right-[8%] opacity-8 rounded-3xl"
+          style={{ width: 180, height: 180 }}
         />
-        <svg className="absolute bottom-[20%] left-[8%] opacity-10" width="80" height="80" viewBox="0 0 80 80">
+        <svg className="absolute bottom-[20%] left-[8%] opacity-20" width="80" height="80" viewBox="0 0 80 80">
           <circle cx="40" cy="40" r="35" fill="none" stroke="#F5841F" strokeWidth="1" />
         </svg>
         {/* Small dots */}
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-white/10"
+            className="absolute w-1.5 h-1.5 rounded-full bg-white/20"
             style={{
               left: `${15 + i * 15}%`,
               top: `${20 + (i % 3) * 25}%`,
             }}
             animate={{
               y: [0, -10, 0],
-              opacity: [0.1, 0.3, 0.1],
+              opacity: [0.2, 0.5, 0.2],
             }}
             transition={{
               duration: 3 + i * 0.5,
@@ -260,9 +260,9 @@ export function Hero() {
             <motion.div
               className="absolute -left-8 top-12 rounded-2xl px-5 py-4"
               style={{
-                background: "rgba(255,255,255,0.1)",
+                background: "rgba(255,255,255,0.15)",
                 backdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.15)",
+                border: "1px solid rgba(255,255,255,0.25)",
               }}
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -278,9 +278,9 @@ export function Hero() {
             <motion.div
               className="absolute -right-4 bottom-20 rounded-2xl px-5 py-4"
               style={{
-                background: "rgba(255,255,255,0.1)",
+                background: "rgba(255,255,255,0.15)",
                 backdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.15)",
+                border: "1px solid rgba(255,255,255,0.25)",
               }}
               animate={{ y: [0, 6, 0] }}
               transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}

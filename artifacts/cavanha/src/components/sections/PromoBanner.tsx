@@ -69,7 +69,7 @@ export function PromoBanner() {
               <span className="relative inline-block">
                 de Pisos
                 <motion.div
-                  className="absolute -bottom-2 left-0 h-2 w-full rounded-full bg-white/30"
+                  className="absolute -bottom-2 left-0 h-2 w-full rounded-full bg-white/50"
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
                   viewport={{ once: true }}
@@ -146,9 +146,9 @@ export function PromoBanner() {
             <motion.div
               className="hidden lg:block absolute -left-8 top-8 rounded-2xl px-5 py-4"
               style={{
-                background: "rgba(255,255,255,0.15)",
+                background: "rgba(255,255,255,0.2)",
                 backdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.25)",
+                border: "1px solid rgba(255,255,255,0.35)",
               }}
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -166,9 +166,9 @@ export function PromoBanner() {
             <motion.div
               className="hidden lg:block absolute -right-4 bottom-16 rounded-2xl px-5 py-3"
               style={{
-                background: "rgba(255,255,255,0.15)",
+                background: "rgba(255,255,255,0.2)",
                 backdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.25)",
+                border: "1px solid rgba(255,255,255,0.35)",
               }}
               animate={{ y: [0, 6, 0] }}
               transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}

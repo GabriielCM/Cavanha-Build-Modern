@@ -31,8 +31,8 @@ export function SocialCTA() {
   return (
     <section className="relative w-full overflow-hidden bg-gradient-to-br from-[#0D2B5C] via-[#0a2249] to-[#060F1F] py-20 md:py-28">
       {/* Subtle decorative elements */}
-      <div className="pointer-events-none absolute -left-32 -top-32 h-64 w-64 rounded-full bg-[#F5841F]/5 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-32 -right-32 h-64 w-64 rounded-full bg-[#F5841F]/5 blur-3xl" />
+      <div className="pointer-events-none absolute -left-32 -top-32 h-64 w-64 rounded-full bg-[#F5841F]/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-32 -right-32 h-64 w-64 rounded-full bg-[#F5841F]/10 blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
@@ -47,7 +47,7 @@ export function SocialCTA() {
             Siga o{" "}
             <span className="text-[#F5841F]">Cavanha</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-md font-[Nunito,sans-serif] text-base text-gray-400">
+          <p className="mx-auto mt-4 max-w-md font-[Nunito,sans-serif] text-base text-gray-300">
             Acompanhe novidades, ofertas exclusivas e dicas de construcao e reforma
           </p>
         </motion.div>
@@ -68,7 +68,7 @@ export function SocialCTA() {
               rel="noopener noreferrer"
               variants={staggerChild}
               whileHover={{ y: -6, scale: 1.02 }}
-              className="group flex flex-1 flex-col items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/10"
+              className="group flex flex-1 flex-col items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-8 backdrop-blur-sm transition-colors hover:border-white/25 hover:bg-white/15"
             >
               {/* Icon with gradient background */}
               <div
@@ -81,7 +81,7 @@ export function SocialCTA() {
                 <h3 className="font-[Barlow_Condensed,sans-serif] text-xl font-bold uppercase tracking-wide text-white">
                   {social.label}
                 </h3>
-                <p className="mt-1 font-[Nunito,sans-serif] text-sm text-gray-400">
+                <p className="mt-1 font-[Nunito,sans-serif] text-sm text-gray-300">
                   {social.handle}
                 </p>
               </div>
@@ -93,7 +93,7 @@ export function SocialCTA() {
                   suffix="+"
                   className="font-[Barlow_Condensed,sans-serif] text-3xl font-black text-[#F5841F]"
                 />
-                <span className="font-[Nunito,sans-serif] text-xs uppercase tracking-wider text-gray-500">
+                <span className="font-[Nunito,sans-serif] text-xs uppercase tracking-wider text-gray-400">
                   seguidores
                 </span>
               </div>

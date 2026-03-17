@@ -83,7 +83,7 @@ export function Timeline() {
           {/* Scrollable Events */}
           <motion.div
             ref={scrollRef}
-            className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 md:gap-8"
+            className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 pl-2 md:gap-8"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             variants={staggerContainerSlow}
             initial="hidden"
@@ -118,12 +118,12 @@ export function Timeline() {
                 </div>
 
                 {/* Card */}
-                <div className="rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+                <div className="rounded-xl border border-white/15 bg-white/10 p-5 backdrop-blur-sm">
                   <span className="mb-3 block text-3xl">{event.icon}</span>
                   <h3 className="mb-2 font-[Barlow_Condensed,sans-serif] text-xl font-bold uppercase tracking-wide text-white">
                     {event.title}
                   </h3>
-                  <p className="font-[Nunito,sans-serif] text-sm leading-relaxed text-gray-400">
+                  <p className="font-[Nunito,sans-serif] text-sm leading-relaxed text-gray-300">
                     {event.description}
                   </p>
                 </div>
