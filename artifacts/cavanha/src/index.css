@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Nunito:wght@300;400;500;600;700;800&display=swap');
-@import "leaflet/dist/leaflet.css";
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Nunito:wght@400;600;700;800&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -94,6 +93,33 @@
 /* ─── SMOOTH SCROLL ──────────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
+}
+
+/* ─── GRADIENT MESH BLOBS (CSS-only, GPU-accelerated) ────────────────────── */
+@keyframes meshBlob1 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(10vw, 5vh); }
+  66% { transform: translate(-5vw, 10vh); }
+}
+@keyframes meshBlob2 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(-12vw, -5vh); }
+  66% { transform: translate(5vw, -10vh); }
+}
+@keyframes meshBlob3 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(15vw, -8vh); }
+  66% { transform: translate(-8vw, 5vh); }
+}
+
+/* ─── PROMO BANNER GRADIENT (CSS-only, GPU-accelerated) ──────────────────── */
+@keyframes promoGradient {
+  0%, 100% { background: linear-gradient(135deg, #F5841F 0%, #e06b0a 40%, #c75a00 100%); }
+  33% { background: linear-gradient(135deg, #e06b0a 0%, #F5841F 40%, #ff9a3c 100%); }
+  66% { background: linear-gradient(135deg, #c75a00 0%, #e06b0a 40%, #F5841F 100%); }
+}
+.promo-gradient-anim {
+  animation: promoGradient 6s linear infinite;
 }
 
 /* ─── SHIMMER ANIMATION ──────────────────────────────────────────────────── */

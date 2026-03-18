@@ -1,3 +1,4 @@
+import "leaflet/dist/leaflet.css";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, MapPin, Store, Clock, Navigation, Truck, Building2, Users } from "lucide-react";

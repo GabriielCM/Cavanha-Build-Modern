@@ -41,6 +41,7 @@ export function BrandsMarquee() {
                   alt={brand.name}
                   className="h-28 w-[180px] object-contain transition-all duration-400 hover:scale-140"
                   style={brand.scale ? { transform: `scale(${brand.scale})` } : undefined}
+                  loading="lazy"
                 />
               ) : (
                 <span className="whitespace-nowrap font-[Barlow_Condensed,sans-serif] text-3xl font-black uppercase tracking-wider text-gray-500 transition-all duration-400 hover:scale-140 hover:text-[#0D2B5C]">

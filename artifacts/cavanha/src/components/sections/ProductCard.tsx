@@ -1,6 +1,6 @@
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { ShoppingCart, MessageCircle, Eye } from "lucide-react";
 import type { Product } from "@/lib/mock-data";
 import { WHATSAPP_MSG } from "@/lib/mock-data";
@@ -10,15 +10,28 @@ interface ProductCardProps {
   onAddToCart: (product: Product) => void;
 }
 
-export function ProductCard({ product, onAddToCart }: ProductCardProps) {
+export const ProductCard = memo(function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [currentImg, setCurrentImg] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
   const images = product.images?.length ? product.images : [product.imageUrl];
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { rootMargin: "100px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (images.length <= 1) return;
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    if (!isMobile && !isHovered) {
+    if ((!isMobile && !isHovered) || (isMobile && !isVisible)) {
       setCurrentImg(0);
       return;
     }
@@ -26,7 +39,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
       setCurrentImg((prev) => (prev + 1) % images.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [images.length, isHovered]);
+  }, [images.length, isHovered, isVisible]);
 
   const hasDiscount = product.oldPrice && product.oldPrice > product.price;
   const discountPercent = hasDiscount
@@ -35,6 +48,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
 
   return (
     <motion.div
+      ref={cardRef}
       className="group relative flex h-[420px] w-[280px] min-w-[280px] max-w-[280px] flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -52,6 +66,7 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
             src={images[currentImg]}
             alt={product.name}
             className="h-full max-h-40 w-auto object-contain"
+            loading="lazy"
             initial={images.length > 1 ? { opacity: 0 } : false}
             animate={{ opacity: 1, scale: isHovered ? 1.08 : 1 }}
             exit={{ opacity: 0 }}
@@ -189,4 +204,4 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
       </div>
     </motion.div>
   );
-}
+});

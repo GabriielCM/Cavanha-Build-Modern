@@ -1,5 +1,5 @@
 
-import { useRef } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { TIMELINE_EVENTS } from "@/lib/mock-data";
@@ -7,6 +7,9 @@ import { staggerContainerSlow, staggerChild, svgDraw } from "@/lib/animations";
 
 export function Timeline() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -15,6 +18,29 @@ export function Timeline() {
       behavior: "smooth",
     });
   };
+
+  const handleScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    const maxScroll = scrollWidth - clientWidth;
+    if (maxScroll <= 0) return;
+    setScrollProgress(scrollLeft / maxScroll);
+    setAtStart(scrollLeft < 10);
+    setAtEnd(scrollLeft > maxScroll - 10);
+  }, []);
+
+  // Swipe hint: pequeno "peek" automático no mobile
+  useEffect(() => {
+    if (window.innerWidth > 768) return;
+    const timer = setTimeout(() => {
+      const el = scrollRef.current;
+      if (!el) return;
+      el.scrollTo({ left: 80, behavior: "smooth" });
+      setTimeout(() => el.scrollTo({ left: 0, behavior: "smooth" }), 400);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <section className="w-full bg-[#0D2B5C] py-20 md:py-28" id="sobre">
@@ -80,10 +106,18 @@ export function Timeline() {
             </svg>
           </div>
 
+          {/* Edge gradient fade (right only) */}
+          <motion.div
+            className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-12 bg-gradient-to-l from-[#0D2B5C] to-transparent md:w-16"
+            animate={{ opacity: atEnd ? 0 : 1 }}
+            transition={{ duration: 0.3 }}
+          />
+
           {/* Scrollable Events */}
           <motion.div
             ref={scrollRef}
-            className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 md:gap-8"
+            onScroll={handleScroll}
+            className="scrollbar-hide flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 pl-4 md:gap-8 md:pl-0"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             variants={staggerContainerSlow}
             initial="hidden"
@@ -130,6 +164,15 @@ export function Timeline() {
               </motion.div>
             ))}
           </motion.div>
+
+          {/* Progress bar (mobile only) */}
+          <div className="mt-4 h-[3px] rounded-full bg-white/10 md:hidden">
+            <motion.div
+              className="h-full rounded-full bg-[#F5841F]"
+              style={{ width: `${Math.max(scrollProgress * 100, 8)}%` }}
+              transition={{ type: "tween", duration: 0.1 }}
+            />
+          </div>
         </div>
       </div>
     </section>
