@@ -5,7 +5,7 @@ export const WHATSAPP_MSG = (product?: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     product
       ? `Olá! Tenho interesse no produto: *${product}*. Podem me informar disponibilidade e prazo de entrega?`
-      : "Olá! Gostaria de saber mais sobre os produtos da Cavanha Materiais de Construção."
+      : "Olá! Gostaria de saber mais sobre os produtos do Cavanha Materiais de Construção."
   )}`;
 
 // ─── TYPES ──────────────────────────────────────────────────────────────────
@@ -49,6 +49,8 @@ export interface Testimonial {
   color: string;
   beforeImage: string;
   afterImage: string;
+  beforeImagePosition?: string;
+  afterImagePosition?: string;
 }
 
 export interface TimelineEvent {
@@ -1667,11 +1669,13 @@ export const TESTIMONIALS: Testimonial[] = [
     name: "Maria Souza",
     role: "Cliente desde 2022",
     stars: 5,
-    text: "Reformei toda a minha cozinha com os produtos da Cavanha. Atendimento excelente, preco justo e entregaram tudo rapidinho aqui em Campo Mourao. Recomendo demais!",
+    text: "Construi minha casa do zero com materiais do Cavanha. Do alicerce ao acabamento, tudo saiu perfeito. Revestimentos, porcelanatos e madeiramento de primeira qualidade. O resultado ficou acima do que eu imaginava!",
     avatar: "MS",
     color: "#e8f4fd",
-    beforeImage: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=400&fit=crop",
-    afterImage: "https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=600&h=400&fit=crop",
+    beforeImage: "/before-after/%2801%29before.jpg",
+    afterImage: "/before-after/%2801%29after.webp",
+    beforeImagePosition: "center 40%",
+    afterImagePosition: "center 41%",
   },
   {
     name: "Carlos Silva",
@@ -1680,8 +1684,10 @@ export const TESTIMONIALS: Testimonial[] = [
     text: "Como mestre de obra, preciso de fornecedor confiavel. A Cavanha nunca me deixou na mao - cimento, argamassa, rejunte, sempre tem em estoque e o preco bate com qualquer concorrente.",
     avatar: "CS",
     color: "#fff4e8",
-    beforeImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop",
-    afterImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop",
+    beforeImage: "/before-after/%2802%29before.jpg",
+    afterImage: "/before-after/%2802%29after.webp",
+    beforeImagePosition: "center 30%",
+    afterImagePosition: "center 30%",
   },
   {
     name: "Ana Oliveira",
@@ -1690,8 +1696,10 @@ export const TESTIMONIALS: Testimonial[] = [
     text: "Otima variedade de porcelanatos e pisos para indicar aos meus clientes. O showroom e organizado e o pessoal entende bem do produto. Parceria garantida para meus projetos!",
     avatar: "AO",
     color: "#e8f9f0",
-    beforeImage: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop",
-    afterImage: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&h=400&fit=crop",
+    beforeImage: "/before-after/%2803%29before.jpg",
+    afterImage: "/before-after/%2803%29after.webp",
+    beforeImagePosition: "center 30%",
+    afterImagePosition: "center 30%",
   },
 ];
 
@@ -1790,7 +1798,7 @@ export const STORE_LOCATIONS: StoreLocation[] = [
     address: "Av. Pref. Pedro Viriato de Souza Filho - Jardim Aeroporto, Campo Mourão - PR, 87310-258",
     lat: -24.0560,
     lng: -52.3820,
-    image: "/fachada.png",
+    image: "/fachada.webp",
     hours: "Seg-Sex 7h-18h | Sáb 7h-12h",
   },
   {

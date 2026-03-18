@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+
+import { useEffect, useRef, useState } from "react";
 
 interface Particle {
   x: number;
@@ -18,14 +19,19 @@ export function CursorTrail() {
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
   const prevMouseRef = useRef({ x: 0, y: 0 });
+  const animationIdRef = useRef<number>(0);
+  const isRunningRef = useRef(false);
+  const [isTouchDevice] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(hover: none)").matches
+  );
 
   useEffect(() => {
+    if (isTouchDevice) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
-    let animationId: number;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -33,11 +39,6 @@ export function CursorTrail() {
     };
     resize();
     window.addEventListener("resize", resize);
-
-    const onMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
-    };
-    window.addEventListener("mousemove", onMouseMove);
 
     const spawnParticles = () => {
       const dx = mouseRef.current.x - prevMouseRef.current.x;
@@ -73,7 +74,7 @@ export function CursorTrail() {
       for (const p of particlesRef.current) {
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.02; // gravity
+        p.vy += 0.02;
         p.life -= 0.02;
 
         const alpha = p.life / p.maxLife;
@@ -83,17 +84,35 @@ export function CursorTrail() {
         ctx.fill();
       }
 
-      animationId = requestAnimationFrame(draw);
+      // Stop the loop when idle (no particles left)
+      if (particlesRef.current.length > 0) {
+        animationIdRef.current = requestAnimationFrame(draw);
+      } else {
+        isRunningRef.current = false;
+      }
     };
 
-    draw();
+    const startLoop = () => {
+      if (!isRunningRef.current) {
+        isRunningRef.current = true;
+        animationIdRef.current = requestAnimationFrame(draw);
+      }
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+      startLoop();
+    };
+    window.addEventListener("mousemove", onMouseMove);
 
     return () => {
-      cancelAnimationFrame(animationId);
+      cancelAnimationFrame(animationIdRef.current);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
     };
-  }, []);
+  }, [isTouchDevice]);
+
+  if (isTouchDevice) return null;
 
   return (
     <canvas

@@ -43,6 +43,8 @@ export function Testimonials() {
               <BeforeAfter
                 beforeImage={testimonial.beforeImage}
                 afterImage={testimonial.afterImage}
+                beforePosition={testimonial.beforeImagePosition}
+                afterPosition={testimonial.afterImagePosition}
               />
 
               {/* Content */}

@@ -7,18 +7,8 @@ import { staggerContainer, staggerChild } from "@/lib/animations";
 export function PromoBanner() {
   return (
     <section className="relative w-full overflow-hidden py-14 md:py-20 lg:py-28">
-      {/* Animated Gradient Background */}
-      <motion.div
-        className="absolute inset-0"
-        animate={{
-          background: [
-            "linear-gradient(135deg, #F5841F 0%, #e06b0a 40%, #c75a00 100%)",
-            "linear-gradient(135deg, #e06b0a 0%, #F5841F 40%, #ff9a3c 100%)",
-            "linear-gradient(135deg, #c75a00 0%, #e06b0a 40%, #F5841F 100%)",
-          ],
-        }}
-        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-      />
+      {/* Animated Gradient Background — CSS-only for GPU acceleration */}
+      <div className="absolute inset-0 promo-gradient-anim" />
 
       {/* Dot grid pattern */}
       <div
@@ -129,7 +119,7 @@ export function PromoBanner() {
               }}
             >
               <img
-                src="/porcelanato.png"
+                src="/porcelanato.webp"
                 alt="Porcelanato polido em ambiente elegante"
                 className="w-full h-48 lg:h-[420px] object-cover"
                 loading="lazy"

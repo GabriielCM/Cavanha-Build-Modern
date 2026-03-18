@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useMotionValue, useTransform, useScroll } from "framer-motion";
 import { ShimmerButton } from "@/components/shared/ShimmerButton";
 import { AnimatedCounter } from "@/components/shared/AnimatedCounter";
@@ -27,13 +27,25 @@ export function Hero() {
   const scrollY = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const scrollOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
+  // Cache the bounding rect to avoid layout thrashing on every mousemove
+  const rectRef = useRef<DOMRect | null>(null);
+  useEffect(() => {
+    const invalidate = () => { rectRef.current = null; };
+    window.addEventListener("resize", invalidate, { passive: true });
+    window.addEventListener("scroll", invalidate, { passive: true });
+    return () => {
+      window.removeEventListener("resize", invalidate);
+      window.removeEventListener("scroll", invalidate);
+    };
+  }, []);
   const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rectRef.current && containerRef.current) {
+      rectRef.current = containerRef.current.getBoundingClientRect();
+    }
+    const rect = rectRef.current;
     if (!rect) return;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    mouseX.set(e.clientX - rect.left - centerX);
-    mouseY.set(e.clientY - rect.top - centerY);
+    mouseX.set(e.clientX - rect.left - rect.width / 2);
+    mouseY.set(e.clientY - rect.top - rect.height / 2);
   };
 
   return (
@@ -100,10 +112,11 @@ export function Hero() {
       >
         {/* Logo decorativa */}
         <img
-          src="/logo-cavanha.png"
+          src="/logo-cavanha.webp"
           alt=""
-          className="absolute top-[8%] right-[8%] opacity-15 rounded-3xl"
+          className="absolute top-[-3%] right-[-5%] opacity-15 rounded-3xl"
           style={{ width: 220, height: 220 }}
+          loading="lazy"
         />
         <svg className="absolute bottom-[20%] left-[8%] opacity-10" width="80" height="80" viewBox="0 0 80 80">
           <circle cx="40" cy="40" r="35" fill="none" stroke="#F5841F" strokeWidth="1" />
@@ -236,9 +249,10 @@ export function Hero() {
               }}
             >
               <img
-                src="/fachada.png"
+                src="/fachada.webp"
                 alt="Fachada Cavanha"
                 className="w-full h-full object-cover"
+                fetchPriority="high"
               />
               <div
                 className="absolute inset-0"

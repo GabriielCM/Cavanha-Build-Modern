@@ -17,10 +17,12 @@ export function MegaFooter() {
         >
           {/* Brand Column */}
           <motion.div variants={staggerChild}>
-            <div className="mb-5 flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#F5841F] font-[Barlow_Condensed,sans-serif] text-xl font-black text-white">
-                C
-              </div>
+            <div className="mb-1 flex items-center gap-3">
+              <img
+                src="/logo-cavanha.webp"
+                alt="Cavanha"
+                className="h-20 w-20 rounded-xl object-cover"
+              />
               <div>
                 <span className="font-[Barlow_Condensed,sans-serif] text-lg font-black uppercase tracking-wider text-white">
                   Cavanha
