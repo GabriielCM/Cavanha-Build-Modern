@@ -38,6 +38,8 @@ export interface Category {
   count: number;
   color: string;
   image: string;
+  imageFit?: "cover" | "contain";
+  imagePosition?: string;
 }
 
 export interface Testimonial {
@@ -76,6 +78,7 @@ export const CATEGORIES: Category[] = [
     count: 156,
     color: "#2d5a9e",
     image: "https://i.imgur.com/Ogdemlu.png",
+    imagePosition: "70% center",
   },
   {
     id: "cimento",
@@ -91,7 +94,7 @@ export const CATEGORIES: Category[] = [
     icon: "🔧",
     count: 312,
     color: "#1a4080",
-    image: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=600&h=400&fit=crop",
+    image: "https://tigresite.s3.amazonaws.com/2021/10/agua-fria-predial.png",
   },
   {
     id: "eletrica",
@@ -99,7 +102,8 @@ export const CATEGORIES: Category[] = [
     icon: "⚡",
     count: 198,
     color: "#2d5a9e",
-    image: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=600&h=400&fit=crop",
+    image: "https://i.imgur.com/EWU7Kjo.jpeg",
+    imageFit: "contain",
   },
   {
     id: "ferramentas",
@@ -107,7 +111,7 @@ export const CATEGORIES: Category[] = [
     icon: "🔨",
     count: 267,
     color: "#0D2B5C",
-    image: "https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=600&h=400&fit=crop",
+    image: "https://i.imgur.com/4HfnXtx.png",
   },
   {
     id: "basicos",
@@ -115,7 +119,7 @@ export const CATEGORIES: Category[] = [
     icon: "🧱",
     count: 120,
     color: "#0D2B5C",
-    image: "https://cdn.leroymerlin.com.br/products/areia_media_20kg_briforte_89758312_5820_600x600.jpg",
+    image: "https://blog.coremma.com.br/wp-content/uploads/2025/04/image.jpeg?x34913",
   },
   {
     id: "portas",
@@ -123,7 +127,7 @@ export const CATEGORIES: Category[] = [
     icon: "🚪",
     count: 78,
     color: "#2d5a9e",
-    image: "https://lojaeucatex.vtexassets.com/arquivos/ids/163635-800-800?v=638139857796470000&width=800&height=800&aspect=true",
+    image: "https://www.elitteportasejanelas.com.br/wp-content/uploads/2023/01/portas-e-janelas.png",
   },
 ];
 

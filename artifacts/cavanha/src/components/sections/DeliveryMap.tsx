@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-import { MessageCircle, MapPin, Store, Clock, Navigation, Truck, Building2, Users } from "lucide-react";
+import { MessageCircle, MapPin, Store, Clock, Navigation, Truck, Building2, Users, ZoomIn, ZoomOut } from "lucide-react";
 import { MapContainer, TileLayer, Marker, Popup, Circle, Tooltip, useMap } from "react-leaflet";
 import L from "leaflet";
 import {
@@ -176,6 +176,31 @@ function GlowCircle({ show }: { show: boolean }) {
   return null;
 }
 
+// ─── Custom Zoom Control ────────────────────────────────────────────────────────
+
+function CustomZoomControl() {
+  const map = useMap();
+
+  return (
+    <div className="absolute bottom-16 right-4 z-1000 flex flex-col gap-1.5">
+      <button
+        onClick={() => map.zoomIn()}
+        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-white/60 bg-white/90 shadow-lg backdrop-blur-sm transition-all hover:bg-white hover:scale-105 active:scale-95"
+        aria-label="Aumentar zoom"
+      >
+        <ZoomIn className="h-5 w-5 text-[#0D2B5C]" />
+      </button>
+      <button
+        onClick={() => map.zoomOut()}
+        className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-white/60 bg-white/90 shadow-lg backdrop-blur-sm transition-all hover:bg-white hover:scale-105 active:scale-95"
+        aria-label="Reduzir zoom"
+      >
+        <ZoomOut className="h-5 w-5 text-[#0D2B5C]" />
+      </button>
+    </div>
+  );
+}
+
 // ─── Main Component ────────────────────────────────────────────────────────────
 
 export function DeliveryMap() {
@@ -206,7 +231,7 @@ export function DeliveryMap() {
         zoom={4}
         scrollWheelZoom={false}
         style={{ height: "100%", width: "100%" }}
-        zoomControl={true}
+        zoomControl={false}
         attributionControl={false}
         maxBounds={PARANA_BOUNDS}
         maxBoundsViscosity={1.0}
@@ -218,6 +243,8 @@ export function DeliveryMap() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
           url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
         />
+
+        <CustomZoomControl />
 
         <MapAnimator
           activeCity={activeCity}
